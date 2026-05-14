@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: transparent;
+      /* VERY IMPORTANT */
+    }
+
+    .container {
+      width: 400px;
+      height: 500px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(10px);
+      border-radius: 40px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    }
+
+    h2 {
+      color: white;
+      text-transform: uppercase;
+      padding: 10px 1px;
+      font-size: 2em;
+      text-align: center;
+    }
+
+    .form-grp {
+      position: relative;
+      width: 300px;
+      margin: 30px 0;
+      border-bottom: 3px solid #fff;
+    }
+
+    .form-grp input {
+      width: 100%;
+      height: 50px;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 2em;
+      color: white;
+      padding: 0 30px 0 10px
+    }
+
+    .form-grp label {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      transform: translateY(-50%);
+      color: white;
+      font-size: 1.2em;
+      transition: 0.5s;
+    }
+
+    .form-grp i {
+      position: absolute;
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
+      color: white;
+      font-size: 1.2em;
+    }
+
+    p {
+      text-align: center;
+      color: white;
+      padding: 10px 0;
+    }
+
+    p>a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    p>a:hover {
+      text-decoration: underline;
+      font-style: italic;
+    }
+
+    #signin {
+      width: 100%;
+      height: 41px;
+      border-radius: 30px;
+      border: none;
+      font-size: 1.2em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin: 10px 0;
+      cursor: pointer;
+      transition: 0.5s;
+    }
+
+    #signin:hover {
+      background-color: rgba(0, 0, 0, 0.3);
+      color: #fff;
+    }
+
+    #signgoogle {
+      width: 100%;
+      height: 41px;
+      border-radius: 30px;
+      border: none;
+      font-size: 1.2em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin: 10px 0;
+      cursor: pointer;
+      transition: 0.5s;
+    }
+
+    #signgoogle:hover {
+      background-color: rgba(0, 0, 0, 0.3);
+      color: #fff;
+    }
+
+    input:focus~label,
+    input:valid~label {
+      top: -5px;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+  <div class="container">
+    <h2>login</h2>
+    <form action="">
+      <div class="form-grp">
+        <input type="email" id="loginEmail" required>
+        <label for="email">email</label>
+        <i class="fa-solid fa-envelope"></i>
+      </div><br>
+      <div class="form-grp">
+        <input type="password" id="loginPassword" required>
+        <label for="password">password</label>
+        <i class="fa-solid fa-lock"></i>
+      </div>
+      <p><input type="checkbox"> <a href="#">forget password</a></p>
+      <input id="signin" type="button" value="sign in">
+      <input id="signgoogle" type="button" value="sign in with google">
+      <p>don't have an account?<a href="register.html">register here</a></p>
+    </form>
+
+  </div>
+</body>
+<script type="module" src="auth.js"></script>
+
+</html>

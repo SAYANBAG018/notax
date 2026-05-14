@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Future Notes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+  }
+
+  body {
+    background: linear-gradient(180deg, #7ae0fa, #d2eef8);
+    overflow-x: hidden;
+  }
+
+  /* =========================
+   NAVBAR
+   ========================= */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px;
+    background: #1a1a2e;
+  }
+
+  .logo {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: wheat;
+    white-space: nowrap;
+  }
+
+  .nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .nav-buttons button {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .login-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .signup-btn {
+    background: white;
+    color: black;
+  }
+
+  /* =========================
+   HERO SECTION
+   ========================= */
+  .hero {
+    text-align: center;
+    padding: 80px 20px;
+  }
+
+  .heading-top {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .main-heading {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+
+  .sub-text {
+    max-width: 650px;
+    margin: auto;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+
+  /* CTA BUTTON */
+  .cta-btn {
+    padding: 14px 28px;
+    border-radius: 30px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  /* =========================
+   FEATURES SECTION
+   ========================= */
+  .features {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 60px;
+    flex-wrap: wrap;
+  }
+
+  /* CARD */
+  .card {
+    width: 220px;
+    padding: 25px;
+    border-radius: 16px;
+    text-align: left;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    transition: 0.3s;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+  }
+
+  .icon {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+
+  .card p {
+    font-size: 13px;
+  }
+
+  /* =========================
+   TABLET (992px and below)
+   ========================= */
+  @media (max-width: 992px) {
+    .navbar {
+      padding: 18px 30px;
+    }
+
+    .hero {
+      padding: 70px 30px;
+    }
+
+    .main-heading {
+      font-size: 36px;
+    }
+
+    .sub-text {
+      font-size: 15px;
+      max-width: 90%;
+    }
+
+    .card {
+      width: 200px;
+    }
+  }
+
+  /* =========================
+   MOBILE (768px and below)
+   ========================= */
+  @media (max-width: 768px) {
+
+    /* Navbar remains horizontal */
+    .navbar {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 20px;
+      gap: 10px;
+    }
+
+    .logo {
+      font-size: 18px;
+    }
+
+    .nav-buttons {
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .nav-buttons button {
+      padding: 8px 14px;
+      font-size: 14px;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 60px 20px;
+    }
+
+    .heading-top {
+      font-size: 20px;
+      line-height: 1.4;
+    }
+
+    .main-heading {
+      font-size: 30px;
+      line-height: 1.3;
+    }
+
+    .sub-text {
+      font-size: 15px;
+      line-height: 1.7;
+      max-width: 100%;
+      padding: 0 5px;
+    }
+
+    .cta-btn {
+      padding: 12px 24px;
+      font-size: 14px;
+      max-width: 100%;
+    }
+
+    /* Cards */
+    .features {
+      margin-top: 40px;
+      gap: 15px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 340px;
+      padding: 22px;
+    }
+
+    .icon {
+      font-size: 28px;
+    }
+
+    .card h3 {
+      font-size: 15px;
+    }
+
+    .card p {
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    /* Popup */
+    #loginPopup {
+      width: 95%;
+      max-width: 400px;
+      height: 90vh;
+    }
+
+    #loginPopup iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  }
+
+  /* =========================
+   SMALL MOBILE (480px and below)
+   ========================= */
+  @media (max-width: 480px) {
+    .navbar {
+      padding: 15px 12px;
+    }
+
+    .logo {
+      font-size: 16px;
+    }
+
+    .nav-buttons {
+      gap: 6px;
+    }
+
+    .nav-buttons button {
+      padding: 7px 12px;
+      font-size: 13px;
+    }
+
+    .heading-top {
+      font-size: 18px;
+    }
+
+    .main-heading {
+      font-size: 24px;
+    }
+
+    .sub-text {
+      font-size: 14px;
+    }
+
+    .cta-btn {
+      width: 100%;
+      max-width: 280px;
+      font-size: 14px;
+    }
+
+    .card {
+      padding: 20px;
+      border-radius: 14px;
+    }
+
+    .icon {
+      font-size: 24px;
+    }
+
+    .card h3 {
+      font-size: 14px;
+    }
+
+    .card p {
+      font-size: 12px;
+    }
+  }
+</style>
+
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="logo">NOTAFLOW.</div>
+
+    <div class="nav-buttons">
+      <button onclick="openLogin()">Login</button>
+      <button class="signup-btn" onclick="openRegister()">Sign Up</button>
+    </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+
+    <h1 class="heading-top">WELCOME TO NOTAFLOW.</h1>
+
+    <h2 class="main-heading">
+      Your Thought Workspace, Perfected.
+    </h2>
+
+    <p class="sub-text">
+      Create notes, craft thoughts, and capture quick ideas seamlessly.
+      Harness the power of organized thought with AI summaries. Get started today.
+    </p>
+    <button class="cta-btn" onclick="startFree()">START FOR FREE →</button>
+    <!-- FEATURES -->
+    <div class="features">
+
+      <div class="card">
+        <div class="icon">📝</div>
+        <h3>CREATE NOTES</h3>
+        <p>Write deeply. Structure your ideas.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">🧠</div>
+        <h3>CRAFT THOUGHTS</h3>
+        <p>Journal, reflect, and share.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">⚡</div>
+        <h3>QUICK CAPTURE</h3>
+        <p>Drop-an idea instantly, no folder needed.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">🤖</div>
+        <h3>AI INSIGHTS</h3>
+        <p>Summarize, find key points, and stay on track.</p>
+      </div>
+
+    </div>
+  </section>
+  <div id="loginOverlay"></div>
+  <!-- Popup -->
+  <div id="loginPopup">
+    <iframe src="login.html"></iframe>
+  </div>
+  <!-- In index.html, replace the existing script tag with: -->
+  <script type="module" src="script.js"></script>
+</body>
+
+</html>

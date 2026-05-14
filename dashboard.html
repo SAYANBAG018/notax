@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Nota - Your workspace for capturing thoughts, organizing notes, and getting AI-powered summaries all in one place." />
+  <meta name="keywords" content="notes app, note taking, organize notes, AI summary, productivity" />
+  <meta name="author" content="Nota Team" />
+  <meta name="theme-color" content="#1a1a2e" />
+  <title>Nota - Notes & Thoughts App</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- ═══════════════ NAVBAR ═══════════════ -->
+  <nav role="navigation" aria-label="Main navigation">
+
+    <!-- HAMBURGER -->
+    <button class="hamburger" id="menuBtn" aria-label="Open sidebar" aria-expanded="false" aria-controls="sidebar">
+
+      <span></span>
+      <span></span>
+      <span></span>
+
+    </button>
+
+    <!-- LOGO -->
+    <div class="nav-brand">
+      NOTAFLOW<em>.</em>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <!-- SEARCH -->
+    <div class="nav-search" role="search" aria-label="Search notes">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+
+      <input type="text" id="globalSearch" placeholder="Search notes, ideas.." autocomplete="off" />
+    </div>
+
+
+    <!-- PROFILE IMAGE -->
+    <!-- PROFILE IMAGE + DROPDOWN -->
+    <div class="nav-profile-wrapper">
+
+      <div class="nav-profile" onclick="toggleProfileMenu()" role="button" tabindex="0" aria-label="Profile Menu">
+        <!-- Real profile image -->
+        <img id="navProfileImg" src="https://i.imgur.com/HeIi0wU.png" alt="Profile">
+
+        <!-- Initials fallback -->
+        <div id="navProfileFallback" class="profile-fallback hidden">
+          G
+        </div>
+
+        <!-- Online indicator -->
+        <div class="profile-online"></div>
+      </div>
+
+      <!-- Dropdown -->
+      <div id="profileDropdown" class="profile-dropdown hidden">
+        <a href="#" onclick="loadPage('account', event)">
+          👤 My Profile
+        </a>
+
+        <a href="#" onclick="loadPage('notifications', event)">
+          🔔 Notifications
+        </a>
+
+        <a href="#" onclick="logoutUser(event)">
+          🚪 Logout
+        </a>
+      </div>
+
+    </div>
+
+    </div>
+
+  </nav>
+  <!-- OVERLAY -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- ═══════════════ SIDEBAR ═══════════════ -->
+  <aside id="sidebar" role="navigation" aria-label="App sidebar">
+    <div class="sb-scroll">
+
+      <!-- ── PROFILE ── -->
+      <div class="sb-label">Profile</div>
+      <div class="sb-profile">
+        <div class="avatar">SB</div>
+        <div class="profile-info">
+          <div class="profile-name" id="sidebarProfileName">Guest</div>
+        </div>
+        <div class="profile-status"></div>
+        <svg class="profile-arrow" width="15" height="15" viewBox="0 0 30 30" fill="none" stroke="currentColor"
+          stroke-width="2">
+          <polyline points="9 18 15 12 9 6" />
+        </svg>
+      </div>
+      <div class="sb-divider"></div>
+      <ul class="sb-list">
+        <li>
+          <a href="#" onclick="loadPage('home', event)">
+            <div class="sb-icon">🏠</div>
+            <span class="sb-text">Home</span>
+          </a>
+        </li>
+      </ul>
+      <!-- ── NOTES ── -->
+
+      <ul class="sb-list">
+        <li>
+          <a href="#" onclick="loadPage('addnotes', event)">
+            <div class="sb-icon">➕</div>
+            <span class="sb-text">Add Notes</span>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="sb-list">
+        <li>
+          <a href="#" onclick="loadPage('quicknotes', event)">
+            <div class="sb-icon">📖</div>
+            <span class="sb-text">Quick Notes</span>
+          </a>
+        </li>
+      </ul>
+      <ul class="sb-list">
+        <li id="grp-allnotes" class="grp-open">
+          <button class="sb-toggle" onclick="toggleGrp('grp-allnotes')" aria-expanded="true">
+            <div class="sb-icon">📚</div>
+            <span class="sb-text">All Notes</span>
+            <svg class="sb-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </button>
+          <ul class="sb-sub">
+            <li class="active"><a href="#" onclick="loadPage('worknotes', event)">WORK</a></li>
+            <li><a href="#" onclick="loadPage('ideasnotes', event)">Ideas</a></li>
+            <li><a href="#" onclick="loadPage('todonotes', event)">TO-DO</a></li>
+            <li><a href="#" onclick="loadPage('studynotes', event)">Study</a></li>
+            <li><a href="#" onclick="loadPage('pinned', event)">Pinned</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="sb-list">
+        <li>
+          <a href="#" onclick="loadPage('ai-summary', event)">
+            <div class="sb-icon">🤖</div>
+            <span class="sb-text">AI SUMMARY</span>
+          </a>
+        </li>
+      </ul>
+      <div class="sb-divider"></div>
+      <ul class="sb-list">
+        <li>
+          <a href="#" onclick="loadPage('journal', event)">
+            <div class="sb-icon">📓</div>
+            <span class="sb-text">DAILY JOURNAL</span>
+          </a>
+        </li>
+      </ul>
+      <ul class="sb-list">
+        <li>
+          <a href="#" onclick="loadPage('comfort', event)">
+            <div class="sb-icon">🛋️</div>
+            <span class="sb-text">Comfort Corner</span>
+          </a>
+        </li>
+      </ul>
+      <ul class="sb-list">
+        <li>
+          <a href="#" onclick="loadPage('thoughtofday', event)">
+            <div class="sb-icon">💭</div>
+            <span class="sb-text">Thought of the Day</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sb-divider"></div>
+      <!-- ── CONTACT ── -->
+      <div class="sb-label">Contact</div>
+      <ul class="sb-list">
+        <li>
+          <a href="#" onclick="loadPage('support', event)">
+            <div class="sb-icon">📧</div>
+            <span class="sb-text">Email Support</span>
+          </a>
+        </li>
+      </ul>
+
+    </div><!-- end sb-scroll -->
+
+    <!-- Sidebar Footer -->
+    <!-- Add this BEFORE the closing </div> of sb-scroll -->
+    <div class="sb-divider"></div>
+    <ul class="sb-list">
+      <li>
+        <a href="#" onclick="logoutUser(event)">
+          <div class="sb-icon">🚪</div>
+          <span class="sb-text">Logout</span>
+        </a>
+      </li>
+    </ul>
+
+  </aside>
+
+  <!-- ═══════════════ MAIN CONTENT ═══════════════ -->
+  <main id="main-content" role="main">
+
+    <!-- HOME PAGE (DEFAULT) -->
+    <section id="page-home" class="page-section active">
+      <div class="page-eyebrow">
+        Welcome back, <span id="homeUserName">User</span>
+      </div>
+
+      <h1>Your Workspace,<br>All in One Place.</h1>
+
+      <p class="page-sub">
+        Capture thoughts, organize notes, get AI-powered summaries, and stay in control —
+        all from a single clean sidebar.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <div class="card-emoji">📝</div>
+          <h3>Notes</h3>
+          <p id="homeNotesCount">0 notes created.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-emoji">🤖</div>
+          <h3>AI Summary</h3>
+          <p id="homeSummaryCount">0 summaries generated.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-emoji">💬</div>
+          <h3>Contact</h3>
+          <p>Support team replies in under 2 hours on weekdays.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-emoji">⚡</div>
+          <h3>Quick Capture</h3>
+          <p>Drop an idea instantly — no folder required.</p>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- ADD NOTES PAGE -->
+    <section id="page-addnotes" class="page-section">
+      <h1>Add Notes</h1>
+      <p class="page-sub">Create a new note and start capturing your thoughts.</p>
+      <div class="content-box">
+        <form id="notesForm" class="form-group">
+          <div class="form-field">
+            <label for="noteTitle">Note Title</label>
+            <input type="text" id="noteTitle" placeholder="Enter note title" required>
+          </div>
+          <div class="form-field">
+            <label for="noteContent">Content</label>
+            <textarea id="noteContent" placeholder="Write your note here..." rows="8" required></textarea>
+          </div>
+          <div class="form-field">
+            <label for="noteCategory">Category</label>
+
+            <select id="noteCategory">
+              <option value="work">Work</option>
+              <option value="ideas">Ideas</option>
+              <option value="todo">To-Do</option>
+              <option value="study">Study</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Save Note</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- PINNED PAGE -->
+    <!-- PINNED PAGE -->
+    <section id="page-pinned" class="page-section">
+      <h1>Pinned Notes</h1>
+      <p class="page-sub">
+        Your most important notes pinned for quick access.
+      </p>
+
+      <div class="content-box">
+        <div id="pinnedNotesContainer" class="notes-list">
+          <div class="quicknotes-empty-state">
+            <div class="quicknotes-empty-icon">📌</div>
+            <h4>No pinned notes yet</h4>
+            <p>Pin your important notes to access them quickly.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- DAILY JOURNAL PAGE -->
+    <section id="page-journal" class="page-section">
+
+      <div class="journal-wrapper">
+
+        <div class="journal-card">
+
+          <!-- IMPORTANT: Form starts here -->
+          <form id="journalForm">
+
+            <!-- HEADER -->
+            <div class="journal-head">
+              <h2>🌞 Daily Journal</h2>
+              <p>Write about your day and reflect.</p>
+            </div>
+
+            <!-- MOOD SECTION -->
+            <div class="mood-box">
+              <h3>How are you feeling today?</h3>
+
+              <div class="mood-list">
+
+                <div class="mood active">
+                  <span>😄</span>
+                  <p>Great</p>
+                </div>
+
+                <div class="mood">
+                  <span>🙂</span>
+                  <p>Good</p>
+                </div>
+
+                <div class="mood">
+                  <span>😐</span>
+                  <p>Okay</p>
+                </div>
+
+                <div class="mood">
+                  <span>🙁</span>
+                  <p>Not good</p>
+                </div>
+
+                <div class="mood">
+                  <span>😭</span>
+                  <p>Bad</p>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- JOURNAL TEXTAREA -->
+            <div class="journal-input-box">
+
+              <div class="journal-placeholder">
+                🖊️ Write about your day...
+              </div>
+
+              <textarea id="journalEntry" placeholder="Today was a productive day..." maxlength="1000"></textarea>
+
+              <div class="journal-bottom">
+
+                <div class="journal-icons">
+                  <span>🖼️</span>
+                  <span>😊</span>
+                </div>
+
+                <div class="journal-count">
+                  <span id="journalCount">0</span>/1000
+                </div>
+
+              </div>
+            </div>
+
+            <!-- JOURNAL HISTORY -->
+            <div class="history-box">
+
+              <div class="history-top">
+                <h3>Your Journal History</h3>
+                <a href="#" onclick="loadPage('journalhistory'); return false;">
+                  View all
+                </a>
+              </div>
+
+              <!-- Latest journal entry will be rendered here -->
+              <div id="journalHistoryContainer">
+                <p>No journal entries yet.</p>
+              </div>
+
+            </div>
+
+            <!-- SAVE BUTTON -->
+            <button type="submit" class="journal-save-btn">
+              Save Journal
+            </button>
+
+          </form>
+          <!-- IMPORTANT: Form ends here -->
+
+        </div>
+
+      </div>
+
+    </section>
+    <!-- comfort corner -->
+    <!-- COMFORT CORNER PAGE -->
+    <section id="page-comfort" class="page-section">
+
+      <div class="comfort-layout">
+
+        <!-- LEFT PANEL : WRITE YOUR THOUGHT -->
+        <div class="comfort-wrapper">
+
+          <div class="comfort-card">
+
+            <!-- HEADER -->
+            <div class="comfort-head">
+              <h2>💗 Comfort Corner</h2>
+              <p>A safe place to express anything.</p>
+            </div>
+
+            <!-- MAIN INPUT BOX -->
+            <div class="comfort-input-box">
+
+              <div class="comfort-heart">💗</div>
+
+              <h3>What's on your mind?</h3>
+
+              <textarea id="comfortText" placeholder="Write whatever you feel...
+
+No pressure. No judgment.
+
+Just you." maxlength="1000"></textarea>
+
+              <div class="comfort-count">
+                <span id="comfortCount">0</span>/1000
+              </div>
+
+            </div>
+
+            <!-- SUPPORTIVE MESSAGE -->
+            <div class="comfort-message-box">
+
+              <div class="comfort-message-text">
+                <h3>🌿 Take Your Time</h3>
+                <p>It's okay to not be okay.</p>
+                <p>Your feelings are valid.</p>
+              </div>
+
+              <div class="comfort-cloud">☁️💗</div>
+
+            </div>
+
+            <!-- ACTION BUTTONS -->
+            <div class="comfort-btns">
+
+              <button type="button" class="save-thought-btn">
+                🔒 Save Thought
+                <span>Save for later</span>
+              </button>
+
+              <button type="button" class="letgo-btn">
+                🪶 Let It Go
+                <span>Release it</span>
+              </button>
+
+            </div>
+
+            <!-- FOOTER -->
+            <div class="comfort-footer">
+              You're not alone. Breathe. You've got this. 💜
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- RIGHT PANEL : SAVED THOUGHTS -->
+        <div class="content-box comfort-history-panel">
+
+          <div class="quicknotes-panel-header">
+            <div class="quicknotes-panel-icon" style="background: #fdf2f8;">
+              💗
+            </div>
+
+            <div class="quicknotes-panel-text">
+              <h3>Saved Thoughts</h3>
+              <p>Your private reflections are stored safely.</p>
+            </div>
+          </div>
+
+          <!-- Saved thoughts will be rendered here -->
+          <div id="comfortHistoryContainer" class="notes-list">
+
+            <div class="quicknotes-empty-state">
+              <div class="quicknotes-empty-icon">💭</div>
+              <h4>No saved thoughts yet</h4>
+              <p>Your saved thoughts will appear here.</p>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+    <!-- THOUGHT OF THE DAY -->
+    <section id="page-thoughtofday" class="page-section">
+
+      <div class="thought-wrapper">
+
+        <div class="thought-card">
+
+          <!-- HEADER -->
+          <div class="thought-head">
+            <h2>⭐ Thought of the Day</h2>
+            <p>Anonymous thoughts from kind souls.</p>
+          </div>
+
+          <!-- SHARE BOX -->
+          <div class="thought-share-box">
+
+            <div class="thought-top">
+
+              <div class="thought-star">
+                ☆
+              </div>
+
+              <div>
+                <h3>Share your thought...</h3>
+                <p>What's on your mind today?</p>
+              </div>
+
+            </div>
+
+            <textarea id="thoughtInput" maxlength="120" placeholder=""></textarea>
+
+            <div class="thought-share-bottom">
+
+              <div class="thought-count">
+                <span id="thoughtCount">0</span>/120
+              </div>
+
+              <button class="thought-share-btn">
+                ✈ Share Anonymously
+              </button>
+
+            </div>
+
+          </div>
+
+          <!-- LIVE THOUGHTS -->
+          <div class="live-thoughts-title">
+            ✨ Live Thoughts
+          </div>
+
+          <div class="live-thought-card">
+
+            <div class="quote-top">❝</div>
+
+            <div class="live-thought-text" id="liveThoughtText">
+              Sometimes the smallest step in the right direction
+              ends up being the biggest step of your life.
+            </div>
+
+            <div class="live-thought-user">
+              ♥ Anonymous
+            </div>
+
+            <div class="quote-bottom">❞</div>
+
+          </div>
+
+          <!-- DOTS -->
+          <div class="thought-dots">
+            <span class="active"></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
+          <!-- FOOTER -->
+          <div class="thought-footer">
+            😊 A new thought every few seconds...
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- QUICK NOTES PAGE -->
+    <section id="page-quicknotes" class="page-section">
+      <h1>Quick Notes</h1>
+      <p class="page-sub">Capture quick thoughts without any formatting.</p>
+
+      <div class="quicknotes-layout">
+
+        <!-- LEFT PANEL : WRITE QUICK NOTE -->
+        <div class="content-box quicknotes-input-panel">
+          <div class="quicknotes-panel-header">
+            <div class="quicknotes-panel-icon blue">
+              📝
+            </div>
+
+            <div class="quicknotes-panel-text">
+              <h3>Write a Quick Note</h3>
+              <p>Jot down your thoughts in a second</p>
+            </div>
+          </div>
+
+          <form id="quickForm" class="form-group">
+            <div class="form-field">
+              <textarea id="quickInput" placeholder="Start typing your quick note..." rows="10"
+                maxlength="500"></textarea>
+            </div>
+            <div class="quicknotes-char-count">
+              <span id="quickCharCount">0</span> / 500
+            </div>
+
+            <!-- Bottom Row -->
+            <div class="quicknotes-form-footer">
+              <div class="quicknotes-tip">
+                💡 <span>Keep it short and simple!</span>
+              </div>
+
+              <button type="submit" class="btn btn-primary">
+                💾 Save Quick Note
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- RIGHT PANEL : SAVED QUICK NOTES -->
+        <div class="content-box quicknotes-output-panel">
+          <div class="quicknotes-panel-header">
+            <div class="quicknotes-panel-icon green">
+              📄
+            </div>
+
+            <div class="quicknotes-panel-text">
+              <h3>Saved Quick Notes</h3>
+              <p>Your quick thoughts at a glance</p>
+            </div>
+          </div>
+
+          <div id="quickNotesContainer" class="notes-list">
+            <div class="quicknotes-empty-state">
+              <div class="quicknotes-empty-icon">📝</div>
+              <h4>No quick notes yet</h4>
+              <p>Write your first quick note and it will appear here.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- WORK NOTES PAGE -->
+    <section id="page-worknotes" class="page-section">
+      <h1>Work Notes</h1>
+      <p class="page-sub">
+        Store and manage all your work-related notes here.
+      </p>
+
+      <div class="content-box">
+        <div id="workNotesContainer" class="notes-list">
+          <div class="quicknotes-empty-state">
+            <div class="quicknotes-empty-icon">💼</div>
+            <h4>No work notes yet</h4>
+            <p>Create your first work note and it will appear here.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- IDEAS NOTES PAGE -->
+    <section id="page-ideasnotes" class="page-section">
+      <h1>Ideas Notes</h1>
+      <p class="page-sub">
+        Keep your creative ideas and inspirations organized.
+      </p>
+
+      <div class="content-box">
+        <div id="ideasNotesContainer" class="notes-list">
+          <div class="quicknotes-empty-state">
+            <div class="quicknotes-empty-icon">💡</div>
+            <h4>No ideas notes yet</h4>
+            <p>Your best ideas will appear here.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TODO NOTES PAGE -->
+    <section id="page-todonotes" class="page-section">
+      <h1>To-Do Notes</h1>
+      <p class="page-sub">
+        Track your important tasks and reminders.
+      </p>
+
+      <div class="content-box">
+        <div id="todoNotesContainer" class="notes-list">
+          <div class="quicknotes-empty-state">
+            <div class="quicknotes-empty-icon">✅</div>
+            <h4>No to-do notes yet</h4>
+            <p>Your tasks and reminders will appear here.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STUDY NOTES PAGE -->
+    <section id="page-studynotes" class="page-section">
+      <h1>Study Notes</h1>
+      <p class="page-sub">
+        Keep your academic notes organized.
+      </p>
+
+      <div class="content-box">
+        <div id="studyNotesContainer" class="notes-list">
+          <div class="quicknotes-empty-state">
+            <div class="quicknotes-empty-icon">📚</div>
+            <h4>No study notes yet</h4>
+            <p>Your academic notes will appear here.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- AI SUMMARY PAGE -->
+    <section id="page-ai-summary" class="page-section">
+      <h1>AI Summary</h1>
+      <p class="page-sub">
+        Transform lengthy text into concise summaries instantly using AI.
+      </p>
+
+      <div class="ai-summary-layout">
+
+        <!-- Input Card -->
+        <div class="ai-card">
+          <div class="ai-card-header">
+            <div class="ai-card-title">
+              📝 Input Text
+            </div>
+            <span class="ai-word-count" id="wordCount">0 words</span>
+          </div>
+
+          <textarea id="inputText" class="ai-textarea" placeholder="Paste or type your text here..."></textarea>
+
+          <div class="ai-style-selector">
+            <button class="ai-style-btn active" data-style="brief">Brief</button>
+            <button class="ai-style-btn" data-style="detailed">Detailed</button>
+            <button class="ai-style-btn" data-style="bullet">Bullet Points</button>
+          </div>
+
+          <button class="ai-summarize-btn" id="summarizeBtn">
+            ✨ Summarize
+          </button>
+        </div>
+
+        <!-- Output Card -->
+        <div class="ai-card">
+          <div class="ai-card-header">
+            <div class="ai-card-title">
+              ⚡ Summary
+            </div>
+
+            <button class="ai-copy-btn" id="copyBtn" style="display:none;">
+              📋 Copy
+            </button>
+          </div>
+
+          <div class="ai-summary-output empty" id="summaryOutput">
+            Your AI-generated summary will appear here
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Feature Cards -->
+      <div class="ai-features">
+        <div class="ai-feature-card">
+          <div class="ai-feature-icon">⚡</div>
+          <h3>Lightning Fast</h3>
+          <p>Get summaries in seconds with our AI engine.</p>
+        </div>
+
+        <div class="ai-feature-card">
+          <div class="ai-feature-icon">🎯</div>
+          <h3>Multiple Styles</h3>
+          <p>Brief, detailed, or bullet point summaries.</p>
+        </div>
+
+        <div class="ai-feature-card">
+          <div class="ai-feature-icon">🔒</div>
+          <h3>Secure</h3>
+          <p>Your text is processed securely and never stored.</p>
+        </div>
+      </div>
+    </section>
+    <!-- ACCOUNT SETTINGS PAGE -->
+    <!-- PERSONAL DETAILS PAGE -->
+    <section id="page-account" class="page-section">
+      <h1>Personal Details</h1>
+      <p class="page-sub">Manage your personal information.</p>
+
+      <div class="content-box">
+        <div class="settings-group">
+          <h3>Profile Information</h3>
+
+          <!-- Profile Name -->
+          <div class="form-field">
+            <label>Profile Name</label>
+            <input type="text" id="profileName" value="Sayan Bag" readonly>
+          </div>
+
+
+          <!-- Email -->
+          <div class="form-field">
+            <label>Email</label>
+            <input type="email" id="profileEmail" value="user@example.com" readonly>
+          </div>
+
+          <!-- Address -->
+          <div class="form-field">
+            <label>Address</label>
+            <input type="text" id="profileAddress" value="Your Address" readonly>
+          </div>
+
+          <!-- Phone -->
+          <div class="form-field">
+            <label>Phone Number</label>
+            <input type="text" id="profilePhone" value="+91 XXXXX XXXXX" readonly>
+          </div>
+
+          <button class="btn btn-secondary" onclick="enableEdit()">Edit Profile</button>
+          <button class="btn btn-primary" id="saveBtn" style="display:none;" onclick="saveProfile()">Save
+            Changes</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTIFICATIONS SETTINGS PAGE -->
+    <section id="page-notifications" class="page-section">
+      <h1>Notification Settings</h1>
+      <p class="page-sub">Control how and when you receive notifications.</p>
+      <div class="content-box">
+        <div class="settings-group">
+          <label class="checkbox-label">
+            <input type="checkbox" checked>
+            <span>Email notifications</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" checked>
+            <span>Push notifications</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox">
+            <span>Daily digest</span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRIVACY & SECURITY PAGE -->
+    <section id="page-privacy" class="page-section">
+      <h1>Privacy & Security</h1>
+      <p class="page-sub">Manage your privacy settings and security options.</p>
+      <div class="content-box">
+        <div class="settings-group">
+          <h3>Security</h3>
+          <p>Your account is secured with two-factor authentication.</p>
+          <button class="btn btn-secondary">Change Password</button>
+        </div>
+        <div class="settings-group">
+          <h3>Privacy</h3>
+          <label class="checkbox-label">
+            <input type="checkbox" checked>
+            <span>Keep notes private</span>
+          </label>
+        </div>
+      </div>
+    </section>
+    <!-- SUPPORT PAGE -->
+    <section id="page-support" class="page-section">
+      <h1>Email Support</h1>
+      <p class="page-sub">Get help from our support team.</p>
+      <div class="content-box">
+        <form id="supportForm" class="form-group">
+          <div class="form-field">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" placeholder="Describe your issue" required>
+          </div>
+          <div class="form-field">
+            <label for="message">Message</label>
+            <textarea id="message" placeholder="Tell us more details..." rows="6" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Send</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+  <div id="loginOverlay"></div>
+
+  <div id="loginPopup">
+    <iframe src="login.html"></iframe>
+  </div>
+  <!-- Your page content -->
+
+  <div id="customModal" class="custom-modal hidden">
+    <div class="custom-modal-box">
+      <h3 id="modalTitle">Message</h3>
+      <p id="modalMessage"></p>
+
+      <textarea id="modalInput" class="hidden" rows="6"></textarea>
+
+      <div class="modal-actions">
+        <button id="modalCancelBtn">Cancel</button>
+        <button id="modalOkBtn">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="script.js"></script>
+</body>
+
+</html>
