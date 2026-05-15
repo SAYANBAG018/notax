@@ -377,20 +377,19 @@
             </div>
 
             <!-- JOURNAL HISTORY -->
-            <div class="history-box">
+            <div class="history-top">
+              <h3>Your Journal History</h3>
+              <a href="#" onclick="toggleAllJournals(); return false;">
+                View all
+              </a>
+            </div>
 
-              <div class="history-top">
-                <h3>Your Journal History</h3>
-                <a href="#" onclick="loadPage('journalhistory'); return false;">
-                  View all
-                </a>
-              </div>
+            <div id="journalHistoryContainer">
+              <!-- Latest journal will appear here -->
+            </div>
 
-              <!-- Latest journal entry will be rendered here -->
-              <div id="journalHistoryContainer">
-                <p>No journal entries yet.</p>
-              </div>
-
+            <!-- Hidden container for all journals -->
+            <div id="allJournalsContainer" style="display: none; margin-top: 20px;">
             </div>
 
             <!-- SAVE BUTTON -->
