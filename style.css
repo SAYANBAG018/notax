@@ -2597,3 +2597,20 @@ h1 {
     transform: translateY(0);
   }
 }
+
+/* Prevent long journal text from breaking layout */
+.history-content p {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  /* show only 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  line-height: 1.5;
+}
+
+/* Space between all journal cards */
+#allJournalsContainer .history-card {
+  margin-top: 16px;
+}
