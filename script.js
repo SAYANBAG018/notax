@@ -281,7 +281,31 @@ function loadPage(pageId, event) {
   // Scroll to top
   window.scrollTo(0, 0);
 }
+
 window.loadPage = loadPage;
+
+/* =========================================================
+   VIEW ALL JOURNALS
+   Opens the full Daily Journal page when "View all" is clicked
+   ========================================================= */
+
+window.viewAllJournals = function () {
+  // Open the Daily Journal page
+  loadPage("journal");
+
+  // Scroll to the journal section after it becomes visible
+  setTimeout(() => {
+    const journalSection = document.getElementById("page-journal");
+
+    if (journalSection) {
+      journalSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
+  }, 200);
+};
+
 /* ═════════════════════ UPDATE ACTIVE LINK ═════════════════════ */
 function updateActiveLink(pageId) {
   // Remove active class from all sidebar items
@@ -1627,6 +1651,99 @@ function loadLatestJournal() {
     `;
   });
 }
+/* =========================================================
+   TOGGLE ALL JOURNALS
+   ========================================================= */
+
+let allJournalsVisible = false;
+
+async function toggleAllJournals() {
+  const container =
+    document.getElementById("allJournalsContainer");
+
+  if (!container) return;
+
+  // Hide if already visible
+  if (allJournalsVisible) {
+    container.style.display = "none";
+    container.innerHTML = "";
+    allJournalsVisible = false;
+    return;
+  }
+
+  const user = auth.currentUser;
+
+  if (!user) {
+    showNotification("Please log in first.");
+    return;
+  }
+
+  const q = query(
+    collection(db, "journals"),
+    where("uid", "==", user.uid),
+    orderBy("createdAt", "desc")
+  );
+
+  onSnapshot(q, (snapshot) => {
+    if (snapshot.empty) {
+      container.innerHTML = `
+        <p>No journal entries found.</p>
+      `;
+      container.style.display = "block";
+      allJournalsVisible = true;
+      return;
+    }
+
+    let html = "";
+
+    snapshot.forEach((docSnap) => {
+      const journal = docSnap.data();
+
+      const date =
+        journal.createdAt?.toDate() || new Date();
+
+      const day = date.getDate();
+      const month = date.toLocaleString("default", {
+        month: "short"
+      });
+
+      // Limit preview to 120 characters
+      let preview = journal.content || "";
+
+      if (preview.length > 120) {
+        preview = preview.substring(0, 120) + "...";
+      }
+
+      html += `
+        <div class="history-card">
+          <div class="history-date">
+            <h2>${day}</h2>
+            <p>${month}</p>
+          </div>
+
+          <div class="history-content">
+            <h4>${journal.mood}</h4>
+            <p>${preview}</p>
+          </div>
+
+          <div class="history-icon">📔</div>
+        </div>
+      `;
+    });
+
+    container.innerHTML = html;
+    container.style.display = "block";
+    allJournalsVisible = true;
+
+    // Smooth scroll to expanded section
+    container.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  });
+}
+
+window.toggleAllJournals = toggleAllJournals;
 /* =========================================================
    COMFORT CORNER - LOAD SAVED THOUGHTS FROM FIRESTORE
    ========================================================= */
